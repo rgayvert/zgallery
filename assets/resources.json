@@ -29,6 +29,9 @@
   "icon.round-box-checked": "material-symbols-outlined-task_alt",
   "icon.round-box-unchecked": "material-symbols-outlined-circle",
 
+  "icon.checkbox-on": "material-symbols-outlined-check_box",
+  "icon.checkbox-off": "material-symbols-outlined-check_box_outline_blank",
+
   "icon.radio-button-on": "material-symbols-outlined-radio_button_checked",
   "icon.radio-button-off": "material-symbols-outlined-radio_button_unchecked",
   "icon.github": "feather-github",
@@ -69,6 +72,7 @@
   "url.sample-website": "https://example.com",
   "url.youtube-iframe-api": "https://www.youtube.com/iframe_api",
   "url.error-page": "info/error.md",
+  "url.markdownit-examples": "info/markdownit-examples.md",
 
   "link.gridexamples": "/demos/grids",
 
