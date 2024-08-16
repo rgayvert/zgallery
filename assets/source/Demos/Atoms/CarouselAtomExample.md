@@ -1,0 +1,1 @@
+Another common pattern is a carousel list, modeled by a carousel atom. This is similar to a counter atom, but steps through a generic list of values rather than a sequence of numbers, using the next() and previous(). It can be configured to be bounded or circular (the default).
