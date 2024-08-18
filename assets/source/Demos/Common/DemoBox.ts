@@ -16,19 +16,19 @@ defineComponentDefaults<DemoBoxOptions>("DemoBox", "VStack", {
 });
 
 /**
- * #DemoBox 
+ * #DemoBox
  *   - standard box used for all demo examples
  *   - contains an ensemble controlled by a segmented button with Demo, Notes, Source, and DOM
  *   - resettable wrapper forces the example to be reloaded when the reset button is clicked
  *   - if the demo has only one section, it is considered "fullpage"; otherwise, space is added around the sections
- * 
+ *
  */
 export function DemoBox(section: GallerySection, topic: GalleryTopic, inOptions: DemoBoxOptions = {}): View {
   const options = mergeComponentDefaults("DemoBox", inOptions);
   options.id = zutil.stripWhitespace(section.title);
 
   const fullPage = topic.sections.length === 1;
-  const viewKey = createRouteAtom(zutil.kebabize(section.title),"demo");
+  const viewKey = createRouteAtom(zutil.kebabize(section.title), "demo");
   const viewLabels = ["Demo", "Notes", "Source", "DOM"];
   const viewKeys = viewLabels.map((v) => v.toLowerCase());
   const tooltips = ["Show Demo", "Show Notes", "Show source files", "Show DOM"];
@@ -39,23 +39,23 @@ export function DemoBox(section: GallerySection, topic: GalleryTopic, inOptions:
 
   function reset(): void {
     resetToggle.toggle();
-    viewKey.set("demo"); 
+    viewKey.set("demo");
   }
 
   function headerButtons(): View {
     return HStack({ background: core.color.inherit }).append(
-      SegmentedTextButton(viewKey,viewKeys, {
+      SegmentedTextButton(viewKey, viewKeys, {
         labels: viewLabels,
         selectionColor: core.color.secondaryContainer,
         tooltips: tooltips,
-        tooltipPlacement: place.bottom, 
+        tooltipPlacement: place.bottom,
       }),
       Spacer(core.space.s4),
       Button({
-        leadingIconURI: "icon.reset", 
+        leadingIconURI: "icon.reset",
         action: () => reset(),
         tooltip: "Reset Demo",
-        tooltipPlacement: place.bottom, 
+        tooltipPlacement: place.bottom,
         border: core.border.none,
       }),
       Spacer(core.space.s4)
@@ -63,7 +63,9 @@ export function DemoBox(section: GallerySection, topic: GalleryTopic, inOptions:
   }
   function createBottomView(key: string): View {
     if (key === "dom") {
-      const domOptions: DOMInspectorOptions = fullPage ? { height: pct(100), maxHeight: undefined, borderBottom: core.border.thin } : {};
+      const domOptions: DOMInspectorOptions = fullPage
+        ? { height: pct(100), maxHeight: undefined, borderBottom: core.border.thin }
+        : {};
       return DOMInspector(demoContainer.children.at(0) || demoContainer, domOptions);
     } else if (key === "notes") {
       return Markdown({ uri: section.markdown ? `${topic.sourceDir || ""}/${section.markdown}` : "" });
@@ -85,7 +87,14 @@ export function DemoBox(section: GallerySection, topic: GalleryTopic, inOptions:
       border: core.border.none,
       borderBottom: core.border.thin.color(core.color.gray.opacity(0.25)),
       name: "DemoHeader",
-    }).append(TextBox(section.title, { color: core.color.secondaryContainer.contrast, background: core.color.secondaryContainer }), Spacer(1), headerButtons());
+    }).append(
+      TextBox(section.title, {
+        color: core.color.secondaryContainer.contrast,
+        background: core.color.secondaryContainer,
+      }),
+      Spacer(1),
+      headerButtons()
+    );
   }
 
   options.justifyContent = undefined;
@@ -94,7 +103,7 @@ export function DemoBox(section: GallerySection, topic: GalleryTopic, inOptions:
   const demoContainer = Resettable(section.componentFn, resetToggle, {
     background: core.color.background,
   });
-  
+
   // TODO: domInspector does not update when demo is reset
 
   if (fullPage) {

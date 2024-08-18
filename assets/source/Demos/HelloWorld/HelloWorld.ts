@@ -40,7 +40,7 @@ const topic: GalleryTopic = {
     {
       title: "Hello World 4",
       componentFn: HelloWorld4,
-      sources: ["HelloWorld4.ts"],
+      sources: ["HelloModel4.ts", "HelloWorld4.ts"],
       markdown: "HelloWorld4.md",
     },
 
