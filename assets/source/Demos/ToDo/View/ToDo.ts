@@ -86,8 +86,8 @@ export function ToDo(inOptions: ToDoOptions = {}): View {
     return RadioButtons(selectedStore, storeNames, storeNames, {
       flexDirection: "row",
       radioButtonOptions: {
-        onIcon: "icon.square-box-on",
-        offIcon: "icon.square-box-off",
+        onIcon: "icon.square-box-filled",
+        offIcon: "icon.square-box-outlined",
       },
     });
   }

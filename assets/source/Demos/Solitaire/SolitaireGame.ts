@@ -2,7 +2,7 @@ import { Box, CenterBox, Grid, HStack, BoxOptions, SimpleViewList, Spacer, TextB
 import { TextLabel, VStack, View, ZStack, atom, core, zget, ch, em } from "zaffre";
 import { defineComponentDefaults, mergeComponentDefaults } from "zaffre";
 import { SolitaireModel, BaseCard, Pile } from "./SolitaireModel";
-import { SolitaireCardComponent } from "./SolitaireCardComponent";
+import { CardComponent } from "./CardComponent";
 
 export interface SolitaireOptions extends BoxOptions {}
 
@@ -24,7 +24,7 @@ export function SolitaireGame(inOptions: SolitaireOptions = {}): View {
 
   model.deal(); 
   const allCardComponents = new Map(
-    [...BaseCard.allBaseCards, ...model.deck].map((card) => [card.cardID, SolitaireCardComponent(card, () => model.cardClicked(card))])
+    [...BaseCard.allBaseCards, ...model.deck].map((card) => [card.cardID, CardComponent(card, () => model.cardClicked(card))])
   );
   
   function makeStack(pile: Pile, name: string, offset = "0"): View {
@@ -38,7 +38,7 @@ export function SolitaireGame(inOptions: SolitaireOptions = {}): View {
     }).append(SimpleViewList(items));
   }
   return CenterBox(options).append(
-    VStack({ maxWidth: ch(120), padding: core.space.s3, alignItems: "center" }).append(
+    VStack({ maxWidth: ch(100), padding: core.space.s3, alignItems: "center" }).append(
       HStack({ padding: core.space.s3 }).append(
         TextLabel(model.highScoreString, { font: core.font.title_medium }),
         Spacer(core.space.s4),

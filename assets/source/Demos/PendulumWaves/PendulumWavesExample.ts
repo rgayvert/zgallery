@@ -7,15 +7,15 @@ import { em, Switch, VStack, createFilterToken } from "zaffre";
 //
 
 // Configuration options for pendulum waves
-export interface PendulumWaves {
-  nballs: number;
-  height: number;
-  shift: number;
-  radius: number;
-  period: number;
-  maxBlur: number;
-  maxBrightness: number;
-}
+const config = {
+  nballs: 75,
+  height: 300,
+  shift: 0.02,
+  radius: 5,
+  period: 2,
+  maxBlur: 2,
+  maxBrightness: 5,
+};
 
 // A pendulum ball just moves vertically according to a sinusoidal formula, and varies
 // its brightness and blur as a function of y
@@ -23,7 +23,7 @@ class Ball extends SimpleAnimationItem {
   count = createCounterAtom(0);
   brightness: Atom<number>;
   blur: Atom<number>;
-  constructor(public index: number, public initialLocation: Point2D, public config: PendulumWaves) {
+  constructor(public index: number, public initialLocation: Point2D) {
     super(initialLocation);
     const k = this.index / (2 * config.radius * config.nballs) + config.shift;
     const y = atom(() => 0.9 * (config.height / 2) * Math.sin(this.count.get() * k));
@@ -35,32 +35,29 @@ class Ball extends SimpleAnimationItem {
     this.count.increment();
   }
 }
+class PendulumWavesModel extends AnimationModel {
+  balls: Ball[];
+  constructor() {
+    super();
+    this.balls = zutil.sequence(0, config.nballs).map((index) => this.createBall(index));
+    this.add(...this.balls);
+  }
+  createBall(index: number): Ball {
+    const initialLocation = Pt2D((index + 0.5) * config.radius * 2, (config.height - config.radius) / 2);
+    return new Ball(index, initialLocation);
+  }
+}
+
 // An animation of a collection of balls that individually move vertically but create
 // varying sinusoidal patterns over time.
 export function PendulumWavesExample(): View {
-  const model = new AnimationModel();
-  function createBall(index: number, config: PendulumWaves): Ball {
-    const initialLocation = Pt2D((index + 0.5) * config.radius * 2, (config.height - config.radius) / 2);
-    return new Ball(index, initialLocation, config);
-  }
-  const config: PendulumWaves = {
-    nballs: 75,
-    height: 300,
-    shift: 0.02,
-    radius: 5,
-    period: 2,
-    maxBlur: 2,
-    maxBrightness: 5,
-  };
+  const model = new PendulumWavesModel();
   const width = config.nballs * config.radius * 2;
   const r = Rct2D(0, -config.height / 2, width, config.height);
-  const balls = zutil.sequence(0, config.nballs).map((index) => createBall(index, config));
-  model.add(...balls);
-
   return VStack({ gap: core.space.s5, marginTop: em(4) }).append(
     SVG({ bounds: r, width: px(width), height: px(config.height) }).append(
       SVGRectangle({ rect: r, fill: core.color.black }),
-      ...balls.map((ball) =>
+      ...model.balls.map((ball) =>
         SVGCircle({
           id: `ball-${ball.index}`,
           r: config.radius,

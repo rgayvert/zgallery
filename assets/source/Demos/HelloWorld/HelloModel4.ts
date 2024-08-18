@@ -1,16 +1,14 @@
 import { atom, createArrayAtom } from "zaffre";
 
 export class HelloModel4 {
-  counter = 1;
-  textValues = createArrayAtom(["Hello World 1"]);
-  disabled = atom(() => this.textValues.length === 1);
-
-  pushRow(): void {
-    this.textValues.push(`Hello World ${this.counter + 1}`);
-    this.counter++;
+  counter = 3;
+  values = createArrayAtom([1, 2, 3]);
+  disabled = atom(() => this.values.length === 1);
+  addValue(): void {
+    this.values.push(++this.counter);
   }
-  popRow(): void {
-    this.textValues.pop();
+  removeValue(): void {
+    this.values.pop();
   }
 }
      

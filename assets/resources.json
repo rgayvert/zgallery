@@ -73,6 +73,8 @@
   "url.youtube-iframe-api": "https://www.youtube.com/iframe_api",
   "url.error-page": "info/error.md",
   "url.markdownit-examples": "info/markdownit-examples.md",
+  "url.github-markdown-light": "css/github-markdown-light.css",
+  "url.github-markdown-dark": "css/github-markdown-dark.css",
 
   "link.gridexamples": "/demos/grids",
 
