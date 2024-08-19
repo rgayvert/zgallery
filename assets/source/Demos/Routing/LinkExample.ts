@@ -1,7 +1,7 @@
-import { View, VStack, Link } from "zaffre";
+import { View, VStack, Link, core, HStack } from "zaffre";
 
 export function LinkExample(): View {
   return VStack().append(
-    Link("link.gridexamples", { text: "Grid Example"}),
+    Link("link.gridexamples", { text: "Grid Example" }),
   );
 }

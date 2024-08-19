@@ -1,6 +1,6 @@
 import { View } from "zaffre";
 import { GalleryDemo, GalleryTopic } from "../Common";
-import { ToDo, ToDoModel } from ":todo";
+import { ToDo } from ":todo";
 
 
 export function ToDoDemo(): View {
