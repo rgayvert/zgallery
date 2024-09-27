@@ -13,7 +13,7 @@ const topic: GalleryTopic = {
     {
       title: "Solitaire",
       componentFn: SolitaireGame,
-      sources: ["SolitaireGame.ts", "SolitaireModel.ts", "CardComponent.ts"],
+      sources: ["SolitaireModel.ts", "SolitaireGame.ts", "SolitaireHeader.ts", "SolitaireGrid.ts", "PlayingCard.ts"],
       markdown: "SolitaireGame.md",
     },
 

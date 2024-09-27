@@ -9,7 +9,7 @@ export function LayoutsDemo(): View {
 }
 
 const topic: GalleryTopic = {
-  sourceDir: "/source/Demos/Layouts",
+  sourceDir: "/source/Demos/Disclosure",
   sections: [
     {
       title: "Disclosure",

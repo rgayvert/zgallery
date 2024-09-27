@@ -1,7 +1,7 @@
-import { SVG, View, core, px, Rct2D, SVGPolyline, SVGArrowhead, SVGDot } from "zaffre";
+import { SVG, View, core, px, rect2D, SVGPolyline, SVGArrowhead, SVGDot } from "zaffre";
 
 export function SVGMarkerExample2(): View {
-  return SVG({ bounds: Rct2D(0, 0, 100, 100), width: px(200), height: px(200) }).append(
+  return SVG({ bounds: rect2D(0, 0, 100, 100), width: px(200), height: px(200) }).append(
     SVGArrowhead("arrow"),
     SVGDot("dot", { fill: core.color.red }),
     SVGPolyline({

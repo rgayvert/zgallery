@@ -1,11 +1,11 @@
-import { atom, zutil, createTimerAtom } from "zaffre";
+import { atom, zutil, timerAtom } from "zaffre";
 
 export class SevenTimerModel {
   elapsedTime = atom(0, { action: (et) => this.elapsedTimeChanged(et) });
+  timer = timerAtom((msec) => this.elapsedTime.set(msec / 1000), 0.1);
   duration = atom(10, { action: (dur) => this.durationChanged(dur) });
-  timer = createTimerAtom((msec) => this.elapsedTime.set(msec / 1000), 0.1);
   percent = atom(() => (100 * this.elapsedTime.get()) / this.duration.get());
-  elapsedLabel = atom(() => zutil.printRoundedTo(this.elapsedTime.get(), 1));
+  elapsedLabel = atom(() => `${zutil.printRoundedTo(this.elapsedTime.get(), 1)}s`);
 
   elapsedTimeChanged(et: number): void {
     if (et >= this.duration.get()) {

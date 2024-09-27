@@ -10,6 +10,11 @@ export function AnimationDemo(): View {
   return GalleryDemo(topic);
 }
 
+//
+// Note: the first example has an indeterminate animation, so if it's running, the lazy creation
+// of Notes, Source, or DOM gets held up. Hence, we preload these views.
+//
+
 const topic: GalleryTopic = {
   sourceDir: "/source/Demos/Animation",
   sections: [ 
@@ -18,6 +23,7 @@ const topic: GalleryTopic = {
       componentFn: ComponentAnimationExample1,
       sources: ["ComponentAnimationModel1.ts", "ComponentAnimationExample1.ts"],
       markdown: "ComponentAnimationExample1.md",
+      preload: true,
     }, 
     {
       title: "Component Animation 2",

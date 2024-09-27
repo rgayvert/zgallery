@@ -1,4 +1,4 @@
-import { core, zutil, Box, ColorToken, Grid, List, View, pct, ch, CenteredTextLabel, Atom } from "zaffre";
+import { core, zutil, Box, ColorToken, Grid, View, pct, ch, CenteredTextLabel, Atom, ViewList } from "zaffre";
 
 // A Grid with 4 columns which shows color palettes for the principle colors used in the current theme
 
@@ -17,7 +17,7 @@ export function ThemeColorsGrid(tokens: Atom<ColorToken[]>): View {
 
   return Box({ width: pct(100) }).append(
     Grid({ nrows: 0, ncolumns: 4, gap: core.space.s2 }).append(
-      List(
+      ViewList(
         tokens, // atom(() => tokens),
         (token) => token.key,
         (token) => ThemeColorLabel(token)

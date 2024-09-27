@@ -1,84 +1,38 @@
-import { Atom, Button, HStack, Spacer, TextLabel, createTimerAtom, StackOptions } from "zaffre";
+import { HStack, Spacer, TextLabel, timerAtom, StackOptions, pct, ch, DownButton } from "zaffre";
 import { VStack, View, atom, core, px, zutil } from "zaffre";
-import { YouTubeIFrame, YouTubeIFrameOptions } from "./YouTubeIFrame";
+import { ytPlayer, YouTubeIFrame, YouTubeIFrameOptions } from ":services";
 
 export function YouTubeExample(): View {
-  const seekTime = atom(0);
-  const player: Atom<YT.Player | undefined> = atom(undefined);
-  const currentTime = createTimerAtom(() => getCurrentTime(), 500, { runImmediately: true });
-  const playing = atom(false);
+  const player = ytPlayer();
+  const currentTime = timerAtom(() => player.getCurrentTime(), 500, { runImmediately: true });
   const currentTimeString = atom(() => zutil.formatSeconds(currentTime.get()));
+  const videoURL = "p53X66_NVEg";
 
-  function getCurrentTime(): number {
-    const p = player.get();
-    return p && p.getCurrentTime ? p.getCurrentTime() : 0;
+  function ArrowButton(label: string, deltaT: number): View {
+    return DownButton({
+      rounding: core.rounding.pill,
+      labelOptions: {
+        padding: px(0),
+      },
+      label: label,
+      downAction: () => player.seek(deltaT),
+    });
   }
-
-  function seek(delta: number): void {
-    const p = player.get();
-    pause();
-    if (p) {
-      const tt = p.getCurrentTime();
-      p.seekTo(tt + delta, true);
-    }
-  }
-
-  function toggle(): void {
-    const p = player.get();
-    if (p) {
-      const state = p.getPlayerState();
-      if (state === YT.PlayerState.PLAYING) {
-        p.pauseVideo();
-        playing.set(false);
-      } else {
-        p.setPlaybackRate(1);
-        p.playVideo();
-        playing.set(true);
-      }
-    }
-  }
-  function pause(): void {
-    const p = player.get();
-    if (p && p.getPlayerState() === YT.PlayerState.PLAYING) {
-      player.get()?.pauseVideo();
-    }
-    playing.set(false);
-  }
-
-  function makeButton(label: string, deltaT: number): View {
-    if (deltaT !== 0) {
-      return Button({
-        rounding: core.rounding.pill,
-        labelOptions: {
-          padding: px(0),
-        },
-        label: label,
-        action: () => seek(deltaT),
-      });
-    } else {
-      return Button({
-        leadingIconURI: atom(() => (playing.get() ? "icon.stop-circle" : "icon.play")),
-        action: () => toggle(),
-        controlSize: "xxl",
-        border: core.border.none,
-        paddingInline: core.space.s4,
-      });
-    }
-  }
-  function createVideoButtons(): View {
+  function VideoButtons(): View {
     const buttonSpecs: [string, number][] = [
       ["<<<", -10],
-      ["<<", -2],
-      ["<", -0.5],
-      ["", 0],
-      [">", 0.5],
-      [">>", 2],
+      ["<<", -5],
+      ["<", -1],
+      [">", 1],
+      [">>", 5],
       [">>>", 10],
     ];
-    return HStack({ gap: core.space.s4 }).append(
+    return HStack({ gap: core.space.s4, width: pct(100) }).append(
       TextLabel(currentTimeString, { font: core.font.label_large }),
-      Spacer(core.space.s6),
-      ...buttonSpecs.map(([label, deltaT]) => makeButton(label, deltaT))
+      Spacer(1),
+      ...buttonSpecs.map(([label, deltaT]) => ArrowButton(label, deltaT)),
+      Spacer(1),
+      Spacer(ch(8))
     );
   }
   const topOptions: StackOptions = {
@@ -88,19 +42,17 @@ export function YouTubeExample(): View {
     alignItems: "start",
     events: {
       keyBindings: {
-        "Space": () => toggle(),
+        "Space": () => player.toggle(),
       },
     },
   };
   const videoOptions: YouTubeIFrameOptions = {
     width: px(800),
     height: px(450),
-    seekTime: seekTime,
-    player: player,
     controls: false,
   };
 
   return HStack(topOptions).append(
-    VStack().append(YouTubeIFrame("p53X66_NVEg", videoOptions), Spacer(core.space.s5), createVideoButtons())
+    VStack().append(YouTubeIFrame(videoURL, player, videoOptions), Spacer(core.space.s5), VideoButtons())
   );
 }

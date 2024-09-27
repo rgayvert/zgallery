@@ -10,10 +10,14 @@ export function OtherColorsExample(): View {
   const fixedColorKeys = theme.fixedColorKeys();
   const fixedColorTokens = allColorTokens.filter((token) => fixedColorKeys.includes(token.key));
 
-  const textLabelOptions: TextLabelOptions = { marginTop: core.space.s6, font: core.font.title_medium, color: core.color.primary };
+  const textLabelOptions: TextLabelOptions = {
+    marginTop: core.space.s6,
+    font: core.font.title_medium,
+    color: core.color.primary,
+  };
   const dividerOptions: HDividerOptions = { paddingBlock: core.space.s1 };
 
-  function section(title: string, colors: ColorToken[]): View {
+  function Section(title: string, colors: ColorToken[]): View {
     return VStack({ alignItems: "center" }).append(
       TextLabel(title, textLabelOptions),
       HDivider(dividerOptions),
@@ -22,6 +26,9 @@ export function OtherColorsExample(): View {
     );
   }
   return Page({ maxWidth: ch(120) }).append(
-    VStack({ alignItems: "center" }).append(section("Semantic Colors", semanticColorTokens), section("Fixed Colors", fixedColorTokens))
+    VStack({ alignItems: "center" }).append(
+      Section("Semantic Colors", semanticColorTokens),
+      Section("Fixed Colors", fixedColorTokens)
+    )
   );
 }

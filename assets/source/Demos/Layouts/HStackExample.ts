@@ -2,7 +2,7 @@ import { core, View, TextLabel, em, ch, Button, StackOptions, Icon, Spacer, HSta
 
 export function HStackExample(): View {
   const options: StackOptions = {
-    width: ch(60),
+    minWidth: ch(40),
     height: em(4),
     gap: core.space.s3,
     border: core.border.thin,

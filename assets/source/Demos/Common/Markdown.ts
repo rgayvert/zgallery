@@ -1,7 +1,6 @@
-import { zget, atom, em, zstring, core, zutil } from "zaffre";
-import { defineComponentDefaults, mergeComponentDefaults, createFetchTextAtom, resolveURI } from "zaffre";
-import { View, TextBox, TextBoxOptions } from "zaffre";
-import { MarkdownService } from ":services";
+import { zget, em, zstring, fetchTextAtom, resolveURI, atom, Atom, inDarkMode } from "zaffre";
+import { core, defineComponentDefaults, mergeComponentDefaults } from "zaffre";
+import { View, TextBox, TextBoxOptions, MarkdownService } from "zaffre";
 
 /**
  * #Markdown
@@ -15,6 +14,7 @@ export interface MarkdownOptions extends TextBoxOptions {
   uri?: zstring;
   markdownStyle?: string;
   expandRelativeAssets?: boolean;
+  darkModeSuffix?: string;
 }
 defineComponentDefaults<MarkdownOptions>("Markdown", "Box", {
   extraClasses: "markdown-body",
@@ -24,10 +24,14 @@ defineComponentDefaults<MarkdownOptions>("Markdown", "Box", {
   padding: core.space.s3,
   userSelect: "text",
   expandRelativeAssets: true,
+  darkModeSuffix: "_dark"
 });
 
 function markdownTransform(s: string): string {
   return MarkdownService.defaultInstance.renderMD(s);
+}
+function applyDarkModeSuffix(s: zstring, suffix: string): Atom<string> {
+  return atom(() => inDarkMode() ? zget(s).replaceAll("<<DM>>", suffix) : zget(s).replaceAll("<<DM>>", ""));
 }
 
 export function Markdown(inOptions: MarkdownOptions = {}): View {
@@ -38,13 +42,15 @@ export function Markdown(inOptions: MarkdownOptions = {}): View {
     if (options.expandRelativeAssets) {
       // prepend ./assets/ with the path to this file
       const path = url.split("/").slice(0, -1).join("/");
-      console.log("url="+url+",path="+path);
       const f = <typeof markdownTransform>options.textTransformFn;
       options.textTransformFn = (text: string) => f(text).replaceAll("./assets/", `${path}/assets/`);
     }
-    mdText = url ? createFetchTextAtom(url) : "";
+    mdText = url ? fetchTextAtom(url) : "";
   } else {
     mdText = zget(options.markdown || "");
+  }
+  if (options.darkModeSuffix) {
+    return TextBox(applyDarkModeSuffix(mdText, options.darkModeSuffix), options);
   }
   return TextBox(mdText, options);
 }

@@ -28,7 +28,7 @@ export class I18nMap {
     return this.localeMap.get(localeID)?.get(key);
   }
   
-  zget(key: string): string {
+  get(key: string): string {
     return this.getWithLocale(I18n.currentInstance.localeID.get(), key) || 
         this.getWithLocale(I18n.fallbackLocaleID, key) || key;
   }

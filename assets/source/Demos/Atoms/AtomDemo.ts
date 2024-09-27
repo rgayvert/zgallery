@@ -35,7 +35,7 @@ const topic: GalleryTopic = {
     {
       title: "Timer Atom",
       componentFn: TimerAtomExample,
-      sources: ["TimerAtomExample.ts"],
+      sources: ["TimerAtomModel.ts", "TimerAtomExample.ts"],
       markdown: "TimerAtomExample.md",
     },
     {

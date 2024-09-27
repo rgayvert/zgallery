@@ -5,4 +5,3 @@ export * from "./GalleryDemo";
 export * from "./GalleryTypes";
 export * from "./Markdown";
 export * from "./I18nMap";
-export * from "./WrappedObject";

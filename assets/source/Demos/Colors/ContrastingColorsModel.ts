@@ -1,4 +1,4 @@
-import { atom, createColorFromHex, relativeLuminance, zutil, createColorToken, Color, createColorRGB, convertColor, createColorLCH, createColorHSL } from "zaffre";
+import { atom, colorFromHex, relativeLuminance, zutil, colorToken, Color, colorRGB, convertColor, colorLCH, colorHSL } from "zaffre";
 
 /*
 contrast = (L1 + 0.05) / (L2 + 0.05)
@@ -11,7 +11,7 @@ while WCAG Level AAA requires a contrast ratio of at least 7:1 for normal text a
 // create a tone by setting the Lightness component of an HSL color
 function hslTone(inColor: Color, tone: number): Color {
     const hsl = convertColor(inColor, "hsl");
-    return convertColor(createColorHSL(hsl.comp[0], hsl.comp[1], tone), "rgb");
+    return convertColor(colorHSL(hsl.comp[0], hsl.comp[1], tone), "rgb");
   }
 function computeContrast(color1: Color, color2: Color): number {
   const lum1 = relativeLuminance(color1);
@@ -20,18 +20,18 @@ function computeContrast(color1: Color, color2: Color): number {
 }
 
 export class ContrastingColorsModel {
-  bgColor = atom(createColorFromHex("#8388ee"));
-  fgColor = atom(createColorFromHex("#888888"));
-  bgToken = atom(() => createColorToken({ color: this.bgColor.get() }));
-  fgToken = atom(() => createColorToken({ color: this.fgColor.get() }));
+  bgColor = atom(colorFromHex("#8388ee"));
+  fgColor = atom(colorFromHex("#888888"));
+  bgToken = atom(() => colorToken({ color: this.bgColor.get() }));
+  fgToken = atom(() => colorToken({ color: this.fgColor.get() }));
   contrast = atom(() => computeContrast(this.bgColor.get(), this.fgColor.get()));
   text = atom(() => `Contrast: ${zutil.printRoundedTo(this.contrast.get(), 2)} : 1`);
   targetContrast = atom("7 : 1");
   targetRatio = atom(() => parseFloat(this.targetContrast.get().slice(0, -3)));
   targetChoices = zutil.sequence(0, 20).map((i) => `${2 + i * 0.5} : 1`);
   disableAdjust = atom(() => this.contrast.get() >= this.targetRatio.get());
-  white = createColorRGB(255, 255, 255);
-  black = createColorRGB(0, 0, 0);
+  white = colorRGB(255, 255, 255);
+  black = colorRGB(0, 0, 0);
 
   // find a tone of the given color s.t. the contrast with a fixedColor is at least the desired ratio
   findTone(color: Color, fixedColor: Color, targetRatio: number): Color | undefined {

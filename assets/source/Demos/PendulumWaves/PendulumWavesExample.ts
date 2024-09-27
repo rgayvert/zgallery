@@ -1,6 +1,6 @@
-import { SimpleAnimationItem, SVG, View, core, px, Rct2D, SVGCircle, SVGRectangle } from "zaffre";
-import { createCounterAtom, atom, Atom, zutil, Pt2D, Point2D, AnimationModel } from "zaffre";
-import { em, Switch, VStack, createFilterToken } from "zaffre";
+import { SimpleAnimationItem, SVG, View, core, px, rect2D, SVGCircle, SVGRectangle, pct } from "zaffre";
+import { counterAtom, atom, Atom, zutil, point2D, Point2D, AnimationModel } from "zaffre";
+import { em, Switch, VStack, filterToken } from "zaffre";
 
 //
 // Adapted from https://codepen.io/manifestinteractive/pen/azdGyv
@@ -20,14 +20,14 @@ const config = {
 // A pendulum ball just moves vertically according to a sinusoidal formula, and varies
 // its brightness and blur as a function of y
 class Ball extends SimpleAnimationItem {
-  count = createCounterAtom(0);
+  count = counterAtom(0);
   brightness: Atom<number>;
   blur: Atom<number>;
   constructor(public index: number, public initialLocation: Point2D) {
     super(initialLocation);
     const k = this.index / (2 * config.radius * config.nballs) + config.shift;
     const y = atom(() => 0.9 * (config.height / 2) * Math.sin(this.count.get() * k));
-    this.location = atom(() => Pt2D(initialLocation.x, y.get()));
+    this.location = atom(() => point2D(initialLocation.x, y.get()));
     this.brightness = atom(() => config.maxBrightness * (y.get() / config.height + 0.5) + 1);
     this.blur = atom(() => config.maxBlur * (y.get() / config.height + 0.5));
   }
@@ -43,7 +43,7 @@ class PendulumWavesModel extends AnimationModel {
     this.add(...this.balls);
   }
   createBall(index: number): Ball {
-    const initialLocation = Pt2D((index + 0.5) * config.radius * 2, (config.height - config.radius) / 2);
+    const initialLocation = point2D((index + 0.5) * config.radius * 2, (config.height - config.radius) / 2);
     return new Ball(index, initialLocation);
   }
 }
@@ -53,9 +53,9 @@ class PendulumWavesModel extends AnimationModel {
 export function PendulumWavesExample(): View {
   const model = new PendulumWavesModel();
   const width = config.nballs * config.radius * 2;
-  const r = Rct2D(0, -config.height / 2, width, config.height);
-  return VStack({ gap: core.space.s5, marginTop: em(4) }).append(
-    SVG({ bounds: r, width: px(width), height: px(config.height) }).append(
+  const r = rect2D(0, -config.height / 2, width, config.height);
+  return VStack({ width: pct(90), gap: core.space.s5, marginTop: em(4) }).append(
+    SVG({ bounds: r, width: pct(100), height: px(config.height) }).append(
       SVGRectangle({ rect: r, fill: core.color.black }),
       ...model.balls.map((ball) =>
         SVGCircle({
@@ -63,7 +63,7 @@ export function PendulumWavesExample(): View {
           r: config.radius,
           c: ball.location,
           fill: core.color.primary,
-          filter: createFilterToken(ball.brightness, ball.blur),
+          filter: filterToken(ball.brightness, ball.blur),
           model: ball,
         })
       )

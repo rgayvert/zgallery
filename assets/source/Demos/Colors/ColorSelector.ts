@@ -1,8 +1,11 @@
-import { Atom, TextInput, Color, atom, ch, core, createBorderToken, em, messageAtom, pct, Spacer } from "zaffre";
+import { Atom, TextInput, Color, atom, ch, core, borderToken, em, messageAtom, pct, Spacer } from "zaffre";
 import { TextLabel, HStack, LabelBox, Slider, VStack, Box, CenterBox, ColorInput, View } from "zaffre";
 import { ColorSelectorModel } from "./ColorSelectorModel";
 
-// #ColorSelector: a component that allows a color to be selected using either RGB sliders, a color picker, or a hex value.
+/**
+ * ColorSelector: a component that allows a color to be selected using either RGB sliders, a color picker, or a hex value.
+ * 
+ */
 
 export function ColorSelector(currentColor: Atom<Color>, storageKey: string): View {
   const model = new ColorSelectorModel(currentColor, storageKey);
@@ -10,18 +13,17 @@ export function ColorSelector(currentColor: Atom<Color>, storageKey: string): Vi
   const pickTrigger = messageAtom(true);
 
   // sliders for RGB values
-  function slider(label: string, value: Atom<number>): View {
+  function RGBSlider(label: string, value: Atom<number>): View {
     return LabelBox(label).append(Slider(value, { minVal: 0, maxVal: 255, round: true, width: ch(15), radiusRatio: 20 }));
   }
 
   // feedback for hex input
   const hexIsValid = atom(() => model.isValidHexColor(model.currentRawHex.get()));
   const validBorder = core.border.thin;
-  const invalidBorder = createBorderToken({ color: core.color.error, width: em(0.1) });
+  const invalidBorder = borderToken({ color: core.color.error, width: em(0.1) });
 
   return HStack({ gap: core.space.s2, model: model, name: "ColorSelector" }).append(
     CenterBox({ height: em(8), width: em(8) }).append(
-      //TextLabel("RGB"),
       Box({
         position: "absolute",
         border: core.border.thin,
@@ -33,15 +35,12 @@ export function ColorSelector(currentColor: Atom<Color>, storageKey: string): Vi
       }).append(ColorInput(model.currentRGBColor, { 
         pickTrigger: pickTrigger, 
         opacity: 0,
-        //height: pct(100),
-        //width: pct(100),
-        //zIndex: 10,
       }))
     ),
     VStack({ width: ch(32) }).append(
-      slider("R", model.red),
-      slider("G", model.green),
-      slider("B", model.blue),
+      RGBSlider("R", model.red),
+      RGBSlider("G", model.green),
+      RGBSlider("B", model.blue),
       Spacer(em(1)),
       HStack({ gap: core.space.s3 }).append(
         TextLabel("Hex:"),

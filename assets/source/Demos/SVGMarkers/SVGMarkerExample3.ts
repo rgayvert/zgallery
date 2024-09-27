@@ -1,7 +1,7 @@
-import { SVG, SVGPath, View, core, px, Rct2D, SVGContextCircle } from "zaffre";
+import { SVG, SVGPath, View, core, px, rect2D, SVGContextCircle } from "zaffre";
 
 export function SVGMarkerExample3(): View {
-  return SVG({ bounds: Rct2D(0, 0, 50, 50), width: px(600), height: px(200) }).append(
+  return SVG({ bounds: rect2D(0, 0, 50, 50), width: px(600), height: px(200) }).append(
     SVGContextCircle("circle"),
     SVGPath({
       d: "M 10,10 30,10 h 10",

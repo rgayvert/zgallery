@@ -1,4 +1,4 @@
-import { AnimationSpec, createToggleAtom } from "zaffre";
+import { AnimationSpec, toggleAtom } from "zaffre";
 
 export class ComponentAnimationModel1 {
   keyFrames = [
@@ -10,6 +10,6 @@ export class ComponentAnimationModel1 {
     duration: 3000,
     iterations: Infinity,
   };
-  running = createToggleAtom(true);
+  running = toggleAtom(true);
   animation = new AnimationSpec(this.keyFrames, this.options, this.running);
 }

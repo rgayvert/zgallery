@@ -22,13 +22,13 @@ const topic: GalleryTopic = {
     {
       title: "Table with record list",
       componentFn: TableExample2,
-      sources: ["TableExample2.ts"],
+      sources: ["ExampleTableModel2.ts", "TableExample2.ts"],
       markdown: "TableExample2.md",
     },
     {
       title: "Table with some customization",
       componentFn: TableExample3,
-      sources: ["TableExample3.ts"],
+      sources: ["ExampleTableModel3.ts", "TableExample3.ts"],
       markdown: "TableExample3.md",
     }, 
     {
@@ -40,7 +40,7 @@ const topic: GalleryTopic = {
     {
       title: "Table with cell editing",
       componentFn: TableExample5,
-      sources: ["TableExample5.ts"],
+      sources: ["ExampleTableModel5.ts", "TableExample5.ts"],
       markdown: "TableExample5.md",
     }, 
     

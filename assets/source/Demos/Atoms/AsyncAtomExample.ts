@@ -1,4 +1,4 @@
-import { View, core, TextLabel, createAsyncAtom } from "zaffre";
+import { View, core, TextLabel, asyncAtom } from "zaffre";
 
 function getGMT(): Promise<string> {
   return new Promise((resolve, _reject) =>
@@ -6,7 +6,7 @@ function getGMT(): Promise<string> {
   );
 }
 export function AsyncAtomExample(): View {
-  const gmt = createAsyncAtom(() => getGMT(), "", 1000);
+  const gmt = asyncAtom(() => getGMT(), "", 1000);
 
   return TextLabel(gmt, {
     font: core.font.headline_medium,

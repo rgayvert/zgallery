@@ -19,7 +19,7 @@ export function ContentDemo(): View {
 const topic: GalleryTopic = {
   sourceDir: "/source/Demos/Content",
   sections: [
-    {
+    { 
       title: "Text Label",
       componentFn: TextLabelExample,
       sources: ["TextLabelExample.ts"],

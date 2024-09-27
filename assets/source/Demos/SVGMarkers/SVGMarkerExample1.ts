@@ -1,7 +1,7 @@
-import { SVG, SVGLine, SVGPath, View, core, px, Rct2D, SVGArrowhead } from "zaffre";
+import { SVG, SVGLine, SVGPath, View, core, px, rect2D, SVGArrowhead } from "zaffre";
 
 export function SVGMarkerExample1(): View {
-  return SVG({ bounds: Rct2D(0, 0, 300, 100), width: px(600), height: px(200) }).append(
+  return SVG({ bounds: rect2D(0, 0, 300, 100), width: px(600), height: px(200) }).append(
     SVGArrowhead("arrow"),
     SVGLine({
       x1: 10,

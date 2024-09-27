@@ -1,7 +1,7 @@
 Model-view design
-<br>  
+  
 Here we add more components and demonstrate how a model should be used to control a set of components.
-<br>
+
 Notes:
   - A button and a pair of switches are added.
   - An HStack is used to position the switches horizontally.

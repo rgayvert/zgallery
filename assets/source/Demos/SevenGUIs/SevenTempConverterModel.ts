@@ -1,7 +1,9 @@
 import { atom, zutil } from "zaffre";
 
+// Note: to avoid circular updates (which can occur due to rounding), we use a separate 
+// temperature atom as the sole-source-of-truth
+
 export class SevenTempConverterModel {
-  // to avoid circular updates, we use a separate date as the sole-source-of-truth
   temperature = atom(0);
   celsius = atom(0);
   fahrenheit = atom(32);

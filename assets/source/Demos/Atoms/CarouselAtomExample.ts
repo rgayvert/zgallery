@@ -1,8 +1,8 @@
 import { View, core, TextLabel, Button, HStack } from "zaffre";
-import { createCarouselAtom } from "zaffre";
+import { carouselAtom } from "zaffre";
 
 export function CarouselAtomExample(): View {
-  const carousel = createCarouselAtom(["1", "2", "3", "4"], "2");
+  const carousel = carouselAtom(["1", "2", "3", "4"], "2");
   return HStack({ gap: core.space.s5 }).append(
     Button({
       label: "<",

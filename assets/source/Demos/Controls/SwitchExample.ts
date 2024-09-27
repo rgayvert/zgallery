@@ -1,7 +1,7 @@
-import { core, View, HStack, createToggleAtom, Switch, Spacer, TextLabel, atom, ch } from "zaffre";
+import { core, View, HStack, toggleAtom, Switch, Spacer, TextLabel, atom, ch } from "zaffre";
 
 export function SwitchExample(): View {
-  const switchValue = createToggleAtom(false);
+  const switchValue = toggleAtom(false);
 
   return HStack({ gap: core.space.s4 }).append(
     Switch(switchValue, { controlSize: "sm" }),

@@ -1,5 +1,5 @@
 import { ColorMode, ColorToken, atom, core } from "zaffre";
-import { CoreKeyColors, createTonalPalettes } from "zaffre";
+import { CoreKeyColors, tonalPalettes } from "zaffre";
 import { createGalleryThemeNamed, galleryThemeKey } from "../../Model/GalleryThemes";
 
 export class ThemeColorsModel {
@@ -16,7 +16,7 @@ export class ThemeColorsModel {
   public contrastRatio = atom(() => this.currentTheme.get().colorContrastRatio);
 
   public themePalettes = atom(() =>
-    createTonalPalettes(new Map(Array.from(this.currentTheme.get().keyColors())) as CoreKeyColors)
+    tonalPalettes(new Map(Array.from(this.currentTheme.get().keyColors())) as CoreKeyColors)
   );
 
   public colorMode = atom(ColorMode.light, { action: () => this.toggleColorMode() });

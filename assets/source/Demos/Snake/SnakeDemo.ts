@@ -12,7 +12,7 @@ const topic: GalleryTopic = {
     {
       title: "Snake",
       componentFn: SnakeBoard,
-      sources: ["SnakeModel.ts", "SnakeBoard.ts", "Snake.ts"],
+      sources: ["SnakeBoard.ts", "SnakeModel.ts", "Snake.ts"],
       markdown: "Snake.md",
     }
   ],

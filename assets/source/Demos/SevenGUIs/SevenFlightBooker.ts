@@ -7,7 +7,7 @@ const flightDirections = ["one-way flight", "return flight"];
 export function SevenFlightBooker(): View {
   const model = new FlightBookerModel();
 
-  function dateInput(date: Atom<Date | undefined>, disabled: Atom<boolean>): View {
+  function DateTextInput(date: Atom<Date | undefined>, disabled: Atom<boolean>): View {
     const dateString = atom(model.formatDate(date.get() || new Date()));
     dateString.addAction((val) => {
       date.set(model.parseDateString(val));
@@ -38,8 +38,8 @@ export function SevenFlightBooker(): View {
   return HStack({ gap: core.space.s6 }).append(
     VStack(stackOptions).append(
       DropDownButton(model.direction, flightDirections),
-      dateInput(model.startDate, atom(false)),
-      dateInput(
+      DateTextInput(model.startDate, atom(false)),
+      DateTextInput(
         model.returnDate,
         atom(() => model.isOneWay())
       ),

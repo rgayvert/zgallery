@@ -1,4 +1,4 @@
-import { View, core, pct, VStack, TextLabel, atom, TextBox, TextInput, em, ZStyleSheet, TextBoxOptions } from "zaffre";
+import { View, core, pct, VStack, TextLabel, TextBox, TextInput, em, ZStyleSheet, TextBoxOptions } from "zaffre";
 import { RegExModel } from "./RegExModel";
 
 export function RegExExample(): View {

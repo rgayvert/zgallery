@@ -15,12 +15,6 @@ const topic: GalleryTopic = {
   sourceDir: "/source/Demos/Floating",
   sections: [
     {
-      title: "Tooltip",
-      componentFn: TooltipExample,
-      sources: ["TooltipExample.ts"],
-      markdown: "TooltipExample.md",
-    },
-    {
       title: "Drop-down button",
       componentFn: DropDownExample,
       sources: ["DropDownExample.ts"],
@@ -33,16 +27,16 @@ const topic: GalleryTopic = {
       markdown: "MenuPlacementExample.md",
     },
     {
+      title: "Tooltip",
+      componentFn: TooltipExample,
+      sources: ["TooltipExample.ts"],
+      markdown: "TooltipExample.md",
+    },
+    {
       title: "Popovers",
       componentFn: PopoverExample,
       sources: ["PopoverExample.ts"],
       markdown: "PopoverExample.md",
-    },
-    {
-      title: "Dialogs",
-      componentFn: DialogExample1,
-      sources: ["DialogExample1.ts"],
-      markdown: "DialogExample1.md",
     },
     {
       title: "Toast",
@@ -50,7 +44,12 @@ const topic: GalleryTopic = {
       sources: ["ToastExample.ts"],
       markdown: "ToastExample.md",
     },
-
+    {
+      title: "Dialogs",
+      componentFn: DialogExample1,
+      sources: ["DialogExample1.ts"],
+      markdown: "DialogExample1.md",
+    },
   ],
 };
 

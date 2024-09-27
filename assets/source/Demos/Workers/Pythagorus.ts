@@ -1,4 +1,4 @@
-import { SharedModel, Vtr2D, namedAtom } from "zaffre";
+import { SharedModel, vector2D, namedAtom } from "zaffre";
 
 export class PythagorusModel extends SharedModel {
   a = namedAtom("a", 3);
@@ -15,7 +15,7 @@ export class PythagorusModel extends SharedModel {
   }
   calculateC(): void {
     this.log("calculateC");
-    this.c.set(Vtr2D(this.a.get(), this.b.get()).magnitude());
+    this.c.set(vector2D(this.a.get(), this.b.get()).magnitude());
   }
 }
 let model: PythagorusModel;

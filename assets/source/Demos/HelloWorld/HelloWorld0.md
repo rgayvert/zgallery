@@ -1,5 +1,5 @@
 A first component
-<br>  
+  
 This is a simple example which shows how a basic Zaffre *component* can be created and configured.
 A component is just a function which return an opaque View, typically by composing other components.
 The most basic HTML component is a Box, which gets translated into a \<div\> by the rendering process. 

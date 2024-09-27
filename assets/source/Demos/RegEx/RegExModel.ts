@@ -11,6 +11,8 @@ export class RegExModel {
     const plainText = this.plainSourceText.get();
     if (pat) {
       try {
+        // this part is a bit gnarly - parse the regex result and replace matches in the source text 
+        // with highlighting spans
         const regex = new RegExp(pat, "g");
         const result = regex.exec(plainText);
         this.sourceText.set(plainText.replace(regex, (match) => `<span class='regex-highlight'>${match}</span>`));

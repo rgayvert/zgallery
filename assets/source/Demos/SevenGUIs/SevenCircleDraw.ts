@@ -1,11 +1,11 @@
-import { core, atom, pct, px, ch, VStack, List, LabelBox, Slider, em, SliderOptions, ButtonOptions } from "zaffre";
+import { core, atom, pct, px, ch, VStack, LabelBox, Slider, em, SliderOptions, ButtonOptions, ViewList } from "zaffre";
 import { View, CenterBox, HStack, Button, SVG, SVGCircle } from "zaffre";
 import { GCircle, SevenCircleDrawModel } from "./SevenCircleDrawModel";
 
 export function SevenCircleDraw(): View {
   const model = new SevenCircleDrawModel();
 
-  function createCircle(gcircle: GCircle): View {
+  function Circle(gcircle: GCircle): View {
     return SVGCircle({
       id: gcircle.id,
       cx: gcircle.x,
@@ -30,9 +30,10 @@ export function SevenCircleDraw(): View {
   }
   // group changes to the radius of a circle on slider drags
   const sliderOptions: SliderOptions = {
-    width: em(10),
+    width: em(8),
     minVal: 5,
     maxVal: 50,
+    radiusRatio: 20,
     disabled: atom(() => !model.hasSelection()),
     onDragStart: () => model.beginUndoGroup(),
     onDragEnd: () => model.endUndoGroup(),
@@ -53,10 +54,10 @@ export function SevenCircleDraw(): View {
     ),
     CenterBox({ padding: core.space.s4, border: core.border.thin }).append(
       SVG({ width: px(400), height: px(400), clickAction: (e) => addCircle(e) }).append(
-        List(
+        ViewList(
           model.circles,
           (circleSpec) => circleSpec.id,
-          (circleSpec) => createCircle(circleSpec)
+          (circleSpec) => Circle(circleSpec)
         )
       )
     )

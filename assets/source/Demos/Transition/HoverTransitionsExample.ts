@@ -4,7 +4,7 @@ import { HoverTransitionsModel } from "./HoverTransitionsModel";
 export function HoverTransitionsExample(): View {
   const model = new HoverTransitionsModel()
 
-  function createCardWithEffect(effectName: string): View {
+  function CardWithEffect(effectName: string): View {
     return Card({
       padding: core.space.s3,
       border: core.border.none,
@@ -18,7 +18,7 @@ export function HoverTransitionsExample(): View {
       padding: core.space.s2,
     }),
     Spacer(core.space.s9),
-    Ensemble(model.selectedEffectName, (effectName) => createCardWithEffect(effectName), {
+    Ensemble(model.selectedEffectName, (effectName) => CardWithEffect(effectName), {
       border: core.border.thin,
       padding: core.space.s3,
     })

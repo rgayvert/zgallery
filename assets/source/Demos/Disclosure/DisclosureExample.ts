@@ -7,7 +7,7 @@ interface DemoData {
 const disclosureData: DemoData = { title: "Some title", detail: lorem.sentences(50) };
 
 export function DisclosureExample(): View {
-  function createDisclosureDetail(dataItem: DemoData): View {
+  function DisclosureDetail(dataItem: DemoData): View {
     return TextBox(dataItem.detail, {
       padding: core.space.s3,
       borderTop: core.border.thin,
@@ -16,7 +16,7 @@ export function DisclosureExample(): View {
   }
 
   return HStack({ padding: core.space.s5 }).append(
-    SimpleDisclosure(disclosureData, disclosureData.title, createDisclosureDetail, {
+    SimpleDisclosure(disclosureData, disclosureData.title, (dataItem) => DisclosureDetail(dataItem), {
       border: core.border.thin,
       width: ch(50),
       overflow: "hidden",

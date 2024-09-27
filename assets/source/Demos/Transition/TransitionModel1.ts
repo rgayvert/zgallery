@@ -1,4 +1,4 @@
-import { createToggleAtom, transitions } from "zaffre";
+import { toggleAtom, transitions } from "zaffre";
 
 export class TransitionModel1 {
   // map of standard in&out transitions
@@ -11,7 +11,7 @@ export class TransitionModel1 {
   ]);
   simpleTransitionNames = ["Fade", "Grow", "Slide", "Collapse"];
 
-  effectsHidden = createToggleAtom(true);
+  effectsHidden = toggleAtom(true);
   toggleHidden(): void {
     this.effectsHidden.toggleAsync();
   }

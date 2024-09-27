@@ -5,13 +5,13 @@ interface DemoData {
   title: string;
   detail: string;
 }
-const accordionData: DemoData[] = zutil
+const disclosureData: DemoData[] = zutil
   .sequence(0, 5)
   .map((i) => ({ id: i, title: lorem.words(4), detail: lorem.sentences(20) }));
 const selectedDisclosureItem: Atom<DemoData | undefined> = atom(undefined);
 
 export function DisclosureListExample(): View {
-  function createDisclosureDetail(dataItem: DemoData): View {
+  function DisclosureDetail(dataItem: DemoData): View {
     return TextBox(dataItem.detail, {
       padding: core.space.s3,
       borderTop: core.border.thin,
@@ -21,10 +21,10 @@ export function DisclosureListExample(): View {
 
   return HStack({ padding: core.space.s5 }).append(
     SimpleDisclosureList(
-      accordionData,
+      disclosureData,
       selectedDisclosureItem,
       (dataItem) => dataItem.title,
-      createDisclosureDetail,
+      (dataItem) => DisclosureDetail(dataItem),
       {
         border: core.border.thin,
         width: ch(50),

@@ -12,7 +12,7 @@ const topic: GalleryTopic = {
     {
       title: "Theme Colors",
       componentFn: ThemeColorsExample,
-      sources: ["ThemeColorsExample.ts", "ThemeColorsGrid.ts", "ThemeColorsModel.ts"],
+      sources: ["ThemeSelector.ts", "ThemeColorsExample.ts", "ThemeColorsGrid.ts", "ThemeColorsModel.ts"],
       markdown: "ThemeColorsExample.md",
     },
 

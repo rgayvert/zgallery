@@ -1,11 +1,11 @@
-import { AttributeEffect, Box, CenteredTextLabel, View, core, createColorToken, pct, px } from "zaffre";
+import { AttributeEffect, Box, CenteredTextLabel, View, core, colorToken, pct, px } from "zaffre";
 import { HoverAnimationModel } from "./HoverAnimationModel";
 
 // Create one face of a cube
 function Face(text: string, hexColor: string, transform: string): View {
   return CenteredTextLabel(text, {
     backfaceVisibility: "inherit",
-    background: createColorToken({ rgba: hexColor }),
+    background: colorToken({ rgba: hexColor }),
     color: core.color.white,
     font: core.font.display_medium,
     width: pct(100),

@@ -1,26 +1,11 @@
-import { View, core, Box, createSimpleTableModel, SimpleTableModel, TableOptions, TableRow, TableColumns, Table, createStringColumn } from "zaffre";
-
-function tableModel4(): SimpleTableModel {
-  const rows = [
-    ["AA", "BB", "CC"],
-    ["DD", "EE", "FF"],
-    ["GG", "HH", "II"],
-  ];
-  const columns = [
-    createStringColumn("Col1", (r) => <string>r[0]),
-    createStringColumn("Col2", (r) => <string>r[1]),
-    createStringColumn("Col3", (r) => <string>r[2]),
-  ] as TableColumns<TableRow>;
-
-  return createSimpleTableModel(rows, columns);
-}
+import { View, core, Box, TableOptions, Table } from "zaffre";
+import { ExampleTableModel5 } from "./ExampleTableModel5";
 
 export function TableExample5(): View {
-  const tableModel = tableModel4();
-
+  const model = new ExampleTableModel5();
   const tableOptions: TableOptions = {
     editable: true,
   };
 
-  return Box({ border: core.border.thin }).append(Table(tableModel, tableOptions));
+  return Box({ border: core.border.thin }).append(Table(model.tableModel5, tableOptions));
 }

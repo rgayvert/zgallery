@@ -1,11 +1,11 @@
-import { core, atom, Atom, ch, LabelBox, ListBox, BasicAction, StackOptions, pct, em } from "zaffre";
-import { Button, VStack, TextInput, HStack, View } from "zaffre";
+import { core, atom,  pct, em, Atom, ch, LabelBox, ListBox, BasicAction,  } from "zaffre";
+import { Button, VStack, TextInput, HStack, View, StackOptions,LabeledList } from "zaffre";
 import { SevenCRUDModel } from "./SevenCRUDModel";
 
 export function SevenCRUD(): View {
   const model = new SevenCRUDModel();
 
-  function textInput(label: string, value: Atom<string>): View {
+  function LabeledInput(label: string, value: Atom<string>): View {
     return LabelBox(label).append(
       TextInput(value, {
         border: core.border.thin,
@@ -14,7 +14,7 @@ export function SevenCRUD(): View {
       })
     );
   }
-  function button(label: string, action: BasicAction, disabled?: Atom<boolean>): View {
+  function ActionButton(label: string, action: BasicAction, disabled?: Atom<boolean>): View {
     return Button({
       label: label,
       action: action,
@@ -34,28 +34,32 @@ export function SevenCRUD(): View {
   const selectionListOptions = {
     width: pct(100),
     height: em(10),
+    padding: core.space.s1,
   };
 
   return VStack(stackOptions).append(
     HStack({ gap: core.space.s7 }).append(
       VStack({ gap: core.space.s5 }).append(
-        textInput("Filter prefix:", model.filter),
+        LabeledInput("Filter prefix:", model.filter),
         ListBox(model.filteredRecords, model.selectedRecord, (name) => model.formatRecord(name), selectionListOptions)
       ),
-      VStack({ gap: core.space.s5, justifyContent: "start" }).append(textInput("Name:", model.first), textInput("Surname:", model.last))
+      LabeledList([
+        ["Name:", LabeledInput("", model.first)],
+        ["Surname:", LabeledInput("", model.last)],
+      ])
     ),
     HStack({ gap: core.space.s5, justifyContent: "center" }).append(
-      button(
+      ActionButton(
         "Create",
         () => model.createRecord(),
         atom(() => !model.readyToCreate())
       ),
-      button(
+      ActionButton(
         "Update",
         () => model.updateRecord(),
         atom(() => !model.readyToUpdate())
       ),
-      button(
+      ActionButton(
         "Delete",
         () => model.deleteRecord(),
         atom(() => !model.readyToDelete())

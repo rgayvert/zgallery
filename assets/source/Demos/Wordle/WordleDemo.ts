@@ -12,7 +12,7 @@ const topic: GalleryTopic = {
     {
       title: "Wordle",
       componentFn: Wordle,
-      sources: ["Wordle.ts", "WordleModel.ts", "Keyboard.ts"],
+      sources: ["Wordle.ts", "WordleModel.ts", "Keyboard.ts", "WordleKeyboard.ts", "WordleGuesses.ts"],
       markdown: "Wordle.md",
     },
 

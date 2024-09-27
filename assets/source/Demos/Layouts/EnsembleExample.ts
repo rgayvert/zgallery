@@ -1,12 +1,12 @@
-import { core, View, ch, atom, createColorToken, CenteredTextLabel } from "zaffre"; 
+import { core, View, ch, atom, colorToken, CenteredTextLabel } from "zaffre"; 
 import { SegmentedTextButton, VStack, pct, Ensemble } from "zaffre";
 
 export function EnsembleExample(): View {
   const colors = ["red", "green", "blue"];
   const selectedColor = atom("red");
 
-  function createColorBox(colorName: string): View {
-    const color = createColorToken({ cssName: colorName });
+  function ColorBox(colorName: string): View {
+    const color = colorToken({ cssName: colorName });
     return CenteredTextLabel(colorName, {
       width: pct(100),
       height: ch(12),
@@ -18,6 +18,6 @@ export function EnsembleExample(): View {
 
   return VStack().append(
     SegmentedTextButton(selectedColor, colors),
-    Ensemble(selectedColor, (colorName) => createColorBox(colorName))
+    Ensemble(selectedColor, (colorName) => ColorBox(colorName))
   );
 }

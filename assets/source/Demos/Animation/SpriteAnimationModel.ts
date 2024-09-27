@@ -1,4 +1,4 @@
-import { Animator, SimpleAnimationItem, Atom, SpriteMap, atom, Pt2D, Vtr2D, AnimationModel } from "zaffre";
+import { BasicAnimator, SimpleAnimationItem, Atom, SpriteMap, atom, point2D, vector2D, AnimationModel } from "zaffre";
 
 // Rectangular coordinates of the sprite images
 const pacManSpriteMap: SpriteMap = new Map([
@@ -11,7 +11,7 @@ const pacManSpriteNames = [...pacManSpriteMap.keys()];
 class PacMan extends SimpleAnimationItem {
   spriteName: Atom<string>;
   constructor(private spriteNames: string[]) {
-    super(Pt2D(0, 0), Vtr2D(0.1, 0));
+    super(point2D(0, 0), vector2D(0.1, 0));
     this.spriteName = atom(this.spriteNames[0]);
   }
   // move and select the next image
@@ -29,8 +29,8 @@ export class SpriteAnimationModel extends AnimationModel {
   spriteMap = pacManSpriteMap;
   pacman = new PacMan(pacManSpriteNames);
 
-  createAnimator(): Animator {
-    return new Animator({ duration: 1500 });
+  basicAnimator(): BasicAnimator {
+    return new BasicAnimator({ duration: 1500 });
   }
   constructor() {
     super();

@@ -6,7 +6,6 @@ import { SVGExample3 } from "./SVGExample3";
 import { SVGExample4 } from "./SVGExample4";
 import { SVGExample5 } from "./SVGExample5";
 import { SVGExample6 } from "./SVGExample6";
-import { SVGExample7 } from "./SVGExample7";
 
 export function SVGExamplesDemo(): View {
   return GalleryDemo(topic);
@@ -50,12 +49,6 @@ const topic: GalleryTopic = {
       componentFn: SVGExample6,
       sources: ["SVGExample6.ts"],
       markdown: "SVGExample6.md",
-    },
-    {
-      title: "SVG Foreign Object",
-      componentFn: SVGExample7,
-      sources: ["SVGExample7.ts"],
-      markdown: "SVGExample7.md",
     },
   ],
 };

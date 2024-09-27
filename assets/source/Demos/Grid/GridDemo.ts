@@ -29,7 +29,6 @@ const topic: GalleryTopic = {
       sources: ["MondrianGridExample.ts"],
       markdown: "MondrianGridExample.md",
     },
-
   ],
 };
 

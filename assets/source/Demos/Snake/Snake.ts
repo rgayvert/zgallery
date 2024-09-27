@@ -1,4 +1,4 @@
-import { SimpleAnimationItem, ArrayAtom, Atom, BasicAction, Point2D, Rect2D, Vector2D, Vtr2D, atom } from "zaffre";
+import { SimpleAnimationItem, ArrayAtom, Atom, BasicAction, Point2D, Rect2D, Vector2D, vector2D, atom } from "zaffre";
 
 export interface SnakeSegment {
   isHead: Atom<boolean>;
@@ -37,7 +37,7 @@ export class Snake extends SimpleAnimationItem {
     // only allow change of orientation
     const dir = this.direction.get();
     if (dir.x * x === 0 && dir.y * y === 0) {
-      this.direction.set(Vtr2D(x, y));
+      this.direction.set(vector2D(x, y));
     }
   }
   isOverPellet(): boolean {

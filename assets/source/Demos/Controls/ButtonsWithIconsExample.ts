@@ -1,7 +1,7 @@
-import { core, View, HStack, Button, atom, createToggleAtom, TextLabel, Spacer, ch } from "zaffre";
+import { core, View, HStack, Button, atom, toggleAtom, TextLabel, Spacer, ch, downloadText } from "zaffre";
 
 export function ButtonsWithIconsExample(): View {
-  const storeOpen = createToggleAtom(true);
+  const storeOpen = toggleAtom(true);
   const result = atom("");
   const iconName = "icon.shopping-cart";
 
@@ -14,9 +14,17 @@ export function ButtonsWithIconsExample(): View {
       leadingIconURI: iconName,
       label: atom(() => (storeOpen.get() ? "Open" : "Closed")),
       trailingIconURI: atom(() => (storeOpen.get() ? "icon.done" : "icon.close")),
-      action: () => storeOpen.toggle(),
+      action: () => {
+        storeOpen.toggle();
+        result.set(`(${storeOpen.get() ? "open" : "closed"})`);
+      }
+    }),
+    Button({
+      leadingIconURI: "icon.download",
+      controlSize: "xl",
+      action: () => downloadText("Hey, now", "file.txt"),
     }),
     Spacer(core.space.s7),
-    TextLabel(result, { padding: core.space.s2, font: core.font.body_small, minWidth: ch(12) }),
+    TextLabel(result, { padding: core.space.s2, font: core.font.body_small, minWidth: ch(12) })
   );
 }

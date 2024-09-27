@@ -1,4 +1,4 @@
-import { ColorToken, Color, atom, createColorFromHex, createColorToken, hexToRGBA, rgbToHex, zutil } from "zaffre";
+import { ColorToken, Color, atom, colorFromHex, colorToken, hexToRGBA, rgbToHex, zutil } from "zaffre";
 import { Atom, LocalData } from "zaffre";
 
 export class ColorSelectorModel {
@@ -19,10 +19,10 @@ export class ColorSelectorModel {
     this.currentHex = LocalData.instance.addAtom(this.storageKey, defaultHex); 
     this.currentRawHex = atom(this.currentHex.get(), { action: (val) => this.isValidHexColor(val) && this.setCurrentHexAndComps(val) });
     this.currentHexRGB = atom(this.currentHex.get().slice(0, this.hexLen), { action: () => this.hexRGBChanged() });
-    currentRGBColor.set(createColorFromHex(this.currentHex.get()));
+    currentRGBColor.set(colorFromHex(this.currentHex.get()));
     currentRGBColor.addAction((color) => this.currentHex.set(color.asHex()));
 
-    this.colorToken = atom(() => createColorToken({ color: this.currentRGBColor.get() }));
+    this.colorToken = atom(() => colorToken({ color: this.currentRGBColor.get() }));
     this.red = atom(() => this.currentRGBColor.get().comp[0], { action: (val) => this.hexChanged(this.currentHex, 0, val) });
     this.green = atom(() => this.currentRGBColor.get().comp[1], { action: (val) => this.hexChanged(this.currentHex, 1, val) });
     this.blue = atom(() => this.currentRGBColor.get().comp[2], { action: (val) => this.hexChanged(this.currentHex, 2, val) });
@@ -36,7 +36,7 @@ export class ColorSelectorModel {
     const val = rgbaHex.substring(0, this.hexLen);
     this.currentHex.set(val);
     this.currentRawHex.set(val);
-    this.currentRGBColor.set(createColorFromHex(this.currentHex.get()));
+    this.currentRGBColor.set(colorFromHex(this.currentHex.get()));
   }
 
   setCurrentHexAndComps(rgbaHex: string): void {

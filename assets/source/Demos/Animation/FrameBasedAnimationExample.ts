@@ -4,7 +4,7 @@ import { FrameBasedAnimationModel } from "./FrameBasedAnimationModel";
 
 export function FrameBasedAnimationExample(): View {
   const model = new FrameBasedAnimationModel();
-  function createThingComponent(thing: SimpleAnimationItem, color: css_color, rounding: css_rounding): View {
+  function ThingComponent(thing: SimpleAnimationItem, color: css_color, rounding: css_rounding): View {
     return Box({
       position: "absolute",
       width: px(20),
@@ -16,8 +16,8 @@ export function FrameBasedAnimationExample(): View {
   }
   return HStack({ gap: core.space.s8 }).append(
     Box({ width: px(200), height: px(20), border: core.border.none }).append(
-      createThingComponent(model.thing1, core.color.primary, core.rounding.r0),
-      createThingComponent(model.thing2, core.color.red, core.rounding.circle)
+      ThingComponent(model.thing1, core.color.primary, core.rounding.r0),
+      ThingComponent(model.thing2, core.color.red, core.rounding.circle)
     ),
     Button({
       label: "start",

@@ -1,5 +1,5 @@
 import { View, VStack, core, StackOptions, pct, em, px, defineComponentDefaults, mergeComponentDefaults } from "zaffre";
-import { DemoBox } from "./DemoBox";
+import { DemoBox } from "./DemoBox"; 
 import { GalleryTopic } from "./GalleryTypes";
 
 /**

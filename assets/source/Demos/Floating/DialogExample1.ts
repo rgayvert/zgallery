@@ -7,7 +7,7 @@ export function DialogExample1(): View {
   const dialog3Hidden = atom(true);
   const response = atom("");
 
-  function createButton(
+  function button(
     label: string,
     title: string,
     defaultAction: BasicAction,
@@ -22,13 +22,13 @@ export function DialogExample1(): View {
     }).append(AlertDialog(hideDialog, title, defaultAction, dialogOptions));
   }
   return HStack({ gap: core.space.s4, width: pct(50), justifyContent: "space-around" }).append(
-    createButton("Simple Alert", "Don't do that.", () => response.set("OK"), dialog1Hidden, {}),
-    createButton("Yes/No", "Are you sure?", () => response.set("Yes"), dialog2Hidden, {
+    button("Simple Alert", "Don't do that.", () => response.set("OK"), dialog1Hidden, {}),
+    button("Yes/No", "Are you sure?", () => response.set("Yes"), dialog2Hidden, {
       acceptLabel: "Yes",
       rejectLabel: "No",
       rejectAction: () => response.set("No"),
     }),
-    createButton("Save Changes", "Save your changes?", () => response.set("Save"), dialog3Hidden, {
+    button("Save Changes", "Save your changes?", () => response.set("Save"), dialog3Hidden, {
       acceptLabel: "Save",
       rejectLabel: "Discard",
       rejectAction: () => response.set("Discard"),

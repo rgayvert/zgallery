@@ -1,4 +1,4 @@
-import { Box, BoxOptions, DropDownButton, Grid, GridArea, GridOptions, LabelBox, List } from "zaffre";
+import { Box, BoxOptions, DropDownButton, Grid, GridArea, GridOptions, LabelBox, ViewList } from "zaffre";
 import { atom, ch, core, gridAreaToString, px, zutil, LocalData, VStack, View } from "zaffre";
 
 function splitGridArea(a: GridArea, level: number, maxLevel: number): GridArea[] {
@@ -52,7 +52,7 @@ export function MondrianGridExample(): View {
       )
     ),
     Grid(options).append(
-      List(
+      ViewList(
         areas,
         (a, _index) => a,
         (a, _index) => Box({ ...boxOptions, background: zutil.randomElement(colors), gridArea: gridAreaToString(a) })

@@ -1,15 +1,15 @@
 import { core, View, atom, px, ch } from "zaffre";
-import { Gauge, Grid, createToggleAtom, Switch, createTimerAtom } from "zaffre";
+import { Gauge, Grid, toggleAtom, Switch, timerAtom } from "zaffre";
 
 export function GaugeExample(): View {
   const percent1 = atom(60);
   const percent2 = atom(0);
-  const counter = createTimerAtom((msec) => percent2.set(percent2.get() + 1), 100);
-  const running = createToggleAtom(false, { action: (b) => counter.toggle() });
+  const counter = timerAtom((msec) => percent2.set(percent2.get() + 1), 100);
+  const running = toggleAtom(false, { action: (b) => counter.toggle() });
 
   return Grid({ ncolumns: 3, gap: core.space.s7 }).append(
     // fixed gauge
-    Gauge(percent1, {
+    Gauge(60, {
       width: ch(20),
       doneColor: core.color.primary,
       pendingColor: core.color.secondary,

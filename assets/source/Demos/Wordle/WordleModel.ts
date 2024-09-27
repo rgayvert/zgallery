@@ -1,4 +1,4 @@
-import { Atom, atom, createCounterAtom, createFetchTextAtom, createIndexedArrayAtom, createSetAtom, resolveURI, zlog, zutil } from "zaffre";
+import { Atom, atom, counterAtom, fetchTextAtom, indexedArrayAtom, setAtom, resolveURI, zlog, zutil } from "zaffre";
 
 // 2of12 word list is from Alan Beale, http://wordlist.aspell.net/12dicts/
 
@@ -12,18 +12,18 @@ export class WordleModel {
   wordLength = 5;
   numberOfGuesses = 6;
   guesses = Array<Guess>(this.numberOfGuesses);
-  matchedRow = createCounterAtom(-1);
-  currentRow = createCounterAtom(0);
+  matchedRow = counterAtom(-1);
+  currentRow = counterAtom(0);
   currentIndex = 0;
   wordToMatch = "";
-  keysSeenInCorrectSpot = createSetAtom<string>(); 
-  keysSeenInWrongSpot = createSetAtom<string>();
-  unusedLetters = createSetAtom<string>();
+  keysSeenInCorrectSpot = setAtom<string>(); 
+  keysSeenInWrongSpot = setAtom<string>();
+  unusedLetters = setAtom<string>();
   status = atom("Enter guess #1");
   gameInProgress = atom(false, { name: "gameInProgress" });
   newGameButtonLabel = atom("Loading...");
-  loadAtom = createFetchTextAtom(resolveURI("wordle/2of12inf.txt"), { action: () => this.load() });
-  toastItems = createIndexedArrayAtom<string>([], { maxLength: 1 });
+  loadAtom = fetchTextAtom(resolveURI("wordle/2of12inf.txt"), { action: () => this.load() });
+  toastItems = indexedArrayAtom<string>([], { maxLength: 1 });
   
   constructor() {
     for (let row = 0; row < this.numberOfGuesses; row++) {

@@ -1,11 +1,11 @@
-import { Button, Grid, HStack, SVGTextLabel, TextLabel, TextLabelList, VStack, View, ViewList, em } from "zaffre";
+import { Button, Grid, HStack, SVGTextLabel, TextLabel, TextLabelList, VList, VStack, View, em } from "zaffre";
 import { atom, core, zutil, ch, pct, vmin } from "zaffre";
 import { TicTacToeModel } from "./TicTacToeModel";
 
 export function TicTacToe(): View {
   const model = new TicTacToeModel();
 
-  function squareLabel(idx: number): View {
+  function SquareLabel(idx: number): View {
     return SVGTextLabel(model.squareValues[idx], {
       name: `square-${idx}`,
       events: { click: () => model.squareClicked(idx) },
@@ -14,16 +14,16 @@ export function TicTacToe(): View {
       vOffset: -8,
     });
   }
-  function moveList(): ViewList<string> {
+  function MoveList(): VList<string> {
     const labels = atom(() => model.moveList.get().map((_val, index) => `Go to Move ${index + 1}`));
     return TextLabelList(labels, (_item: string, index: number) => ({
-        name: `goto-${index}`,
-        selectionColor: core.color.tertiary,
-        background: core.color.secondaryContainer,
-        events: { click: () => model.goToMove(index) },
+      name: `goto-${index}`,
+      selectionColor: core.color.tertiary,
+      background: core.color.secondaryContainer,
+      events: { click: () => model.goToMove(index) },
     }));
   }
-  function newGameButton(): View {
+  function NewGameButton(): View {
     return Button({
       label: "New Game",
       font: core.font.title_medium,
@@ -35,18 +35,35 @@ export function TicTacToe(): View {
       hidden: atom(() => !model.gameOver()),
     });
   }
-  return VStack({ name: "TicTacToe", model: model, justifyContent: "start", height: pct(100), gap: core.space.s5 }).append(
+  return VStack({
+    name: "TicTacToe",
+    model: model,
+    justifyContent: "start",
+    height: pct(100),
+    gap: core.space.s5,
+  }).append(
     TextLabel("Tic-Tac-Toe", { name: "game-title", padding: core.space.s5, font: core.font.display_medium }),
     HStack({ gap: core.space.s7 }).append(
       Grid({ nrows: 3, ncolumns: 3, gap: core.space.s2, width: vmin(50) }).append(
-        ...zutil.sequence(0, 9).map((idx) => squareLabel(idx))
+        ...zutil.sequence(0, 9).map((idx) => SquareLabel(idx))
       ),
-      VStack({ justifyContent: "start", border: core.border.thin, minHeight: em(20), background: core.color.secondaryContainer }).append(
-        TextLabel("History", { name: "history-title", font: core.font.title_medium.bold(), background: core.color.secondaryContainer }),
-        VStack({ minWidth: ch(16), padding: core.space.s2, background: core.color.secondaryContainer }).append(moveList())
+      VStack({
+        justifyContent: "start",
+        border: core.border.thin,
+        minHeight: em(20),
+        background: core.color.secondaryContainer,
+      }).append(
+        TextLabel("History", {
+          name: "history-title",
+          font: core.font.title_medium.bold(),
+          background: core.color.secondaryContainer,
+        }),
+        VStack({ minWidth: ch(16), padding: core.space.s2, background: core.color.secondaryContainer }).append(
+          MoveList()
+        )
       )
     ),
     TextLabel(model.status, { name: "status", font: core.font.headline_medium }),
-    newGameButton()
+    NewGameButton()
   );
 }

@@ -1,41 +1,27 @@
-import { View, Table, core, createSimpleTableModel, TableOptions, Box, zutil, ch } from "zaffre";
-import { TableRow, createStringColumn, SimpleTableModel, TableColumns } from "zaffre";
-
-function createTableModel(cols: string[]): SimpleTableModel {
-  const rows = zutil.sequence(0, 7).map((_row) => cols.map((_col) => ""));
-  rows[1][0] = "23";
-  rows[2][0] = "10";
-  rows[1][1] = "14";
-  rows[3][3] = "=A1+B1";
-  rows[4][3] = "=A1-B1";
-  rows[3][4] = "=A1*A2";
-  rows[5][5] = "=A1";
-  const columns = cols.map((col, index) => createStringColumn(col, (r) => <string>r[index])) as TableColumns<TableRow>;
-  return createSimpleTableModel(rows, columns);
-}
+import { View, Table, core, TableOptions, Box, ch } from "zaffre";
+import { SevenCellsModel } from "./SevenCellsModel";
 
 export function SevenCells(): View {
-  const cols = [..."ABCDEF"];
-  const tableModel = createTableModel(cols);
+  const model = new SevenCellsModel();
 
-  tableModel.columns.forEach((col) => {
-    const f = col.formatter;
+  model.columns.forEach((col) => {
+    const f = col.formatter!;
     col.formatter = (r) => expandValue(<string>f(r));
-  })
+  });
 
   const opts: TableOptions = {
     editable: true,
     dataCellViewOptions: {
-      minWidth: ch(7)
-    }
+      minWidth: ch(7),
+    },
   };
 
   function valueOfCell(result: RegExpExecArray, colName: string, rowName: string): string {
     const groups = result.groups;
     if (groups && groups[colName] && groups[rowName]) {
-      const c = cols.indexOf(groups[colName]);
+      const c = model.cols.indexOf(groups[colName]);
       const r = parseInt(groups[rowName]);
-      const row = tableModel.rows.at(r) || [];
+      const row = model.rows.at(r) || [];
       return row[c]?.toString() || "";
     } else {
       return "";
@@ -57,10 +43,8 @@ export function SevenCells(): View {
   }
 
   function expandValue(value: string): string {
-    return value.startsWith("=")
-      ? evaluate(value.slice(1))
-      : value;
+    return value.startsWith("=") ? evaluate(value.slice(1)) : value;
   }
 
-  return Box({ border: core.border.thin }).append(Table(tableModel, opts));
+  return Box({ border: core.border.thin }).append(Table(model.tableModel7, opts));
 }

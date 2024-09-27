@@ -12,7 +12,7 @@ const topic: GalleryTopic = {
     {
       title: "YouTube",
       componentFn: YouTubeExample,
-      sources: ["YouTubeExample.ts", "YouTubeIFrame.ts"],
+      sources: ["YouTubeExample.ts"],
       markdown: "YouTubeExample.md",
     },
 

@@ -1,1 +1,1 @@
-A simple wrapper around an HTML <img> element.
+A simple wrapper around an HTML \<img> element.

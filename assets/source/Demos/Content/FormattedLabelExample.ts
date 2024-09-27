@@ -1,38 +1,41 @@
-import { core, View, pct, LabelBox, FormattedLabel, NumericFormatter, TextLabelOptions } from "zaffre";
-import { LabelBoxOptions, Grid } from "zaffre";
-import { DateTimeFormatter } from ':services';
+import { core, View, pct, LabelBox, FormattedLabel, evaluateWithLocalDefaults } from "zaffre";
+import { NumericFormatter, DateTimeFormatter, Grid, GridOptions } from "zaffre";
 
-export function FormattedLabelExample(): View {
+export function FormattedLabelExample(options: GridOptions = {}): View {
   const numericValue = 12345.6789;
   const dateValue = new Date();
-  const opts: TextLabelOptions = {
-    border: core.border.thin,
-    padding: core.space.s2,
-  };
-  const labelOpts: LabelBoxOptions = {
-    placementPt: "xstart-ystart",
-    labelOptions: {
-      font: core.font.label_large.bold(),
+
+  function FormattedLabels(): View {
+    const intl = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" });
+    return Grid({ ...options, width: pct(100), gap: core.space.s5, ncolumns: 4 }).append(
+      LabelBox("Plain:").append(FormattedLabel(numericValue, NumericFormatter({}))),
+      LabelBox("Fixed(2):").append(FormattedLabel(numericValue, NumericFormatter({ fixed: 2 }))),
+      LabelBox("Precision(4):").append(FormattedLabel(numericValue, NumericFormatter({ precision: 4 }))),
+      LabelBox("Exponential(5):").append(FormattedLabel(numericValue, NumericFormatter({ exponential: 5 }))),
+      LabelBox("Round:").append(FormattedLabel(numericValue, NumericFormatter({ round: "round" }))),
+      LabelBox("Floor:").append(FormattedLabel(numericValue, NumericFormatter({ round: "floor" }))),
+      LabelBox("Ceiling:").append(FormattedLabel(numericValue, NumericFormatter({ round: "ceiling" }))),
+      LabelBox("DE-Currency:").append(FormattedLabel(numericValue, NumericFormatter({ intl: intl }))),
+      LabelBox("DD-MM-YYYY").append(FormattedLabel(dateValue, DateTimeFormatter("DD-MM-YYYY"))),
+      LabelBox("HH:mm:ss").append(FormattedLabel(dateValue, DateTimeFormatter("HH:mm:ss"))),
+      LabelBox("ddd MMM D").append(FormattedLabel(dateValue, DateTimeFormatter("ddd MMM D"))),
+      LabelBox("MMM D, YYYY").append(FormattedLabel(dateValue, DateTimeFormatter("MMM D, YYYY")))
+    );
+  }
+
+  const localDefaults = {
+    "LabelBox": {
+      placementPt: "xstart-ystart",
+      labelOptions: {
+        font: core.font.label_large.bold(),
+        color: core.color.secondary,
+      },
+    },
+    "FormattedLabel": {
+      border: core.border.thin,
+      padding: core.space.s2,
+      color: core.color.red,
     },
   };
-  function label(label: string, view: View): View {
-    return LabelBox(label, labelOpts).append(view);
-  }
-  const intl = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" });
-
-  return Grid({ width: pct(100), gap: core.space.s5, ncolumns: 4 }).append(
-    label("Plain: ", FormattedLabel(numericValue, NumericFormatter({}), opts)),
-    label("Fixed(2): ", FormattedLabel(numericValue, NumericFormatter({ fixed: 2 }), opts)),
-    label("Precision(4): ", FormattedLabel(numericValue, NumericFormatter({ precision: 4 }), opts)),
-    label("Exponential(5): ", FormattedLabel(numericValue, NumericFormatter({ exponential: 5 }), opts)),
-    label("Round: ", FormattedLabel(numericValue, NumericFormatter({ round: "round" }), opts)),
-    label("Floor: ", FormattedLabel(numericValue, NumericFormatter({ round: "floor" }), opts)),
-    label("Ceiling: ", FormattedLabel(numericValue, NumericFormatter({ round: "ceiling" }), opts)),
-    label("DE-Currency: ", FormattedLabel(numericValue, NumericFormatter({ intl: intl }), opts)),
-
-    label("DD-MM-YYYY", FormattedLabel(dateValue, DateTimeFormatter("DD-MM-YYYY"), opts)),
-    label("HH:mm:ss", FormattedLabel(dateValue, DateTimeFormatter("HH:mm:ss"), opts)),
-    label("ddd MMM D", FormattedLabel(dateValue, DateTimeFormatter("ddd MMM D"), opts)),
-    label("MMM D, YYYY", FormattedLabel(dateValue, DateTimeFormatter("MMM D, YYYY"), opts)),
-  );
+  return evaluateWithLocalDefaults(localDefaults, () => FormattedLabels());
 }

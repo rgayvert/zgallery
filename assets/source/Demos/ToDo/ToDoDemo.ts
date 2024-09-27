@@ -13,7 +13,9 @@ const topic: GalleryTopic = {
     {
       title: "ToDo",
       componentFn: () => ToDo(),
-      sources: ["View/ToDo.ts", "View/ItemPanel.ts", "Model/ToDoModel.ts", "Data/ToDoData.ts"],
+      sources: ["View/ToDo.ts", "View/ToDoButtonBar.ts", "View/ToDoInputRow.ts",
+        "View/ToDoItemList.ts", "View/ToDoItemRow.ts", "View/ToDoStoreSelector.ts", 
+        "Model/ToDoModel.ts", "Data/ToDoData.ts"],
       markdown: "ToDo.md",
     },
 

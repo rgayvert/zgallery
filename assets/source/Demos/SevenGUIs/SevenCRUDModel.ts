@@ -1,4 +1,4 @@
-import { atom, Atom, createArrayAtom } from "zaffre";
+import { atom, Atom, arrayAtom } from "zaffre";
 
 interface Name {
   first: string;
@@ -11,7 +11,7 @@ export class SevenCRUDModel {
     { last: "Emil", first: "Hans" },
   ];
   filter = atom("");
-  allRecords = createArrayAtom<Name>(this.initialRecords);
+  allRecords = arrayAtom<Name>(this.initialRecords);
   filteredRecords = atom(
     () =>
       this.allRecords

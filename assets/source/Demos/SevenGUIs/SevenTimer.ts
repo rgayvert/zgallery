@@ -8,6 +8,7 @@ export function SevenTimer(): View {
     minVal: 0,
     maxVal: 20,
     width: ch(20),
+    radiusRatio: 20,
   } as const;
   const stackOptions: StackOptions = {
     border: core.border.thin,

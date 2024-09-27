@@ -1,8 +1,8 @@
 import { View, core, TextLabel, atom, Button, HStack, ch } from "zaffre";
-import { createCounterAtom } from "zaffre";
+import { counterAtom } from "zaffre";
 
 export function CounterAtomExample(): View {
-  const N = createCounterAtom(1);
+  const N = counterAtom(1);
   const N2 = atom(() => N.get() * 2);
   return HStack({ gap: core.space.s5 }).append(
     Button({

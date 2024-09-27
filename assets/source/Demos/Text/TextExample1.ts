@@ -1,4 +1,4 @@
-import { View, core, em, ScrollPanel, TextBox, pct, atom, lorem, VStack, HStack, RadioButtons } from "zaffre";
+import { View, core, em, ScrollPane, TextBox, pct, atom, lorem, VStack, HStack, RadioButtons } from "zaffre";
 
 export function TextExample1(): View {
   const content = atom(lorem.sentences(200));
@@ -7,7 +7,7 @@ export function TextExample1(): View {
     return capitalized.get() === "capitalized" ? s.toUpperCase() : s;
   }
   return VStack({ gap: core.space.s5 }).append(
-    ScrollPanel({ width: pct(100), height: pct(100) }).append(
+    ScrollPane({ width: pct(100), height: pct(100) }).append(
       TextBox(content, {
         border: core.border.thin,
         padding: core.space.s4,

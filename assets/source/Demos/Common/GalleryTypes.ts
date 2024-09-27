@@ -1,10 +1,11 @@
-import { View } from "zaffre";
+import { ViewCreator } from "zaffre";
 
 export type GallerySection = {
-  componentFn: () => View;
+  componentFn: ViewCreator;
   title: string;
   sources: string[];
   markdown: string;
+  preload?: boolean;
 }
 export type GalleryTopic = {
   sourceDir: string;

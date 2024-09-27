@@ -1,29 +1,9 @@
-import { ch, core, HDivider, HDividerOptions, Page, LabelBox, Slider, List, atom, TextLabelOptions } from "zaffre";
-import { SegmentedButton, Spacer, TextLabel, VStack, View } from "zaffre";
+import { ch, core, HDivider, HDividerOptions, Page, atom, TextLabelOptions, ViewList } from "zaffre";
+import { Spacer, TextLabel, VStack, View } from "zaffre";
 import { ThemeColorsModel } from "./ThemeColorsModel";
 import { ThemeColorsGrid } from "./ThemeColorsGrid";
 import { ThemeTonalPalette } from "./ThemeTonalPalette";
-import { galleryThemeNames } from "../../Model/GalleryThemes";
-
-function ThemeSelector(model: ThemeColorsModel): View {
-  return VStack({ alignItems: "center", gap: core.space.s5 }).append(
-    LabelBox("Theme:").append(
-      SegmentedButton(model.currentThemeName, galleryThemeNames, {
-        rounding: core.rounding.r0,
-        font: core.font.body_small,
-        tooltips: galleryThemeNames.map((themeName) => `Switch to ${themeName} theme`),
-        ripple: true,
-      })
-    ),
-    LabelBox("Mode:").append(
-      SegmentedButton(model.colorMode, model.colorModeNames, {
-        rounding: core.rounding.r0,
-        font: core.font.body_small,
-      })
-    ),
-    LabelBox("Contrast:").append(Slider(model.contrastRatio.get(), { minVal: 1.0, maxVal: 21.0 }))
-  );
-}
+import { ThemeSelector } from "./ThemeSelector";
 
 export function ThemeColorsExample(): View {
   const model = new ThemeColorsModel();
@@ -52,7 +32,7 @@ export function ThemeColorsExample(): View {
       Spacer(core.space.s5),
       TextLabel("Tonal Palettes", textLabelOptions),
       HDivider(dividerOptions),
-      List(
+      ViewList(
         palettes,
         (item) => item,
         ([name, palette]) => ThemeTonalPalette(palette, name)

@@ -1,9 +1,9 @@
 import { core, View, HStack, pct, Button, simpleInteractionEffects, transitions } from "zaffre";
-import { VDivider, em, DownButton, createCounterAtom, TextLabel, atom, ch, Spacer } from "zaffre";
+import { VDivider, em, DownButton, counterAtom, TextLabel, atom, ch, Spacer } from "zaffre";
 
 export function SimpleButtonExample(): View {
   const result = atom("");
-  const downCount = createCounterAtom(0);
+  const downCount = counterAtom(0);
 
   return HStack({ gap: core.space.s5 }).append(
     Button({

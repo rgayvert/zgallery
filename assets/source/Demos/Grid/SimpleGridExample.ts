@@ -1,4 +1,4 @@
-import { BoxOptions, CenterBox, Grid, GridOptions, TextLabel, View, ch, core } from "zaffre";
+import { BoxOptions, CenteredTextLabel, Grid, GridOptions, View, ch, core } from "zaffre";
 
 export function SimpleGridExample(): View {
   const data = [
@@ -19,6 +19,6 @@ export function SimpleGridExample(): View {
   };
 
   return Grid(options).append(
-    ...data.map((row) => row.map((val) => CenterBox(boxOptions).append(TextLabel(val.toString()))).flat()).flat()
+    ...data.map((row) => row.map((val) => CenteredTextLabel(val.toString(), boxOptions))).flat()
   );
 }

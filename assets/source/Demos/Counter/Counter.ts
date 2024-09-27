@@ -1,22 +1,24 @@
-import { SVG, SVGContainerOptions, BasicAction, View, defineComponentDefaults, mergeComponentDefaults, pct, px, zboolean } from "zaffre";
-import { SVGTextLabel, SVGTextLabelOptions, Rct2D, Rect2D, zstring, addOptionEvents } from "zaffre";
+import { Box, SVG, SVGContainerOptions, View, ViewOptions, pct, px, zboolean } from "zaffre";
+import { defineComponentDefaults, mergeComponentDefaults } from "zaffre";
+import { SVGTextLabel, SVGTextLabelOptions, rect2D, Rect2D, zstring } from "zaffre";
 import { CounterModel } from "./CounterModel";
 
 export interface CounterOptions extends SVGContainerOptions {
   rounded?: zboolean;
-  storageKey?: string;
-  defaultCount?: number;
+  min?: number;
+  max?: number;
+  initialValue?: number;
 }
 defineComponentDefaults<CounterOptions>("Counter", "", {
   rounded: true,
-  bounds: Rct2D(0, 0, 100, 120),
+  min: 0,
+  max: 99,
+  initialValue: 0,
+  bounds: rect2D(0, 0, 100, 120),
   width: pct(100),
 });
 
-function createLabel(label: zstring, bounds: Rect2D, options: SVGTextLabelOptions, action?: BasicAction): View {
-  if (action) {
-    addOptionEvents(options, { click: action });
-  }
+function CounterLabel(label: zstring, bounds: Rect2D, options: SVGTextLabelOptions): View {
   return SVGTextLabel(label, {
     ...options,
     x: bounds.x,
@@ -26,13 +28,22 @@ function createLabel(label: zstring, bounds: Rect2D, options: SVGTextLabelOption
     cursor: "pointer",
   });
 }
-export function Counter(inOptions: CounterOptions = {}): View {
+
+export function Counter(key: string, inOptions: CounterOptions = {}): View {
   const options = mergeComponentDefaults("Counter", inOptions);
-  const model = new CounterModel(options.storageKey, options.defaultCount);
+  const model = new CounterModel(key, options.min, options.max, options.initialValue);
 
   return SVG(options).append(
-    createLabel(model.countString(), Rct2D(10, 10, 80, 80), { ...options, vOffset: -6 }),
-    createLabel("-", Rct2D(25, 90, 20, 20), { ...options, disabled: model.mayNotDecrement }, () => model.decrement()),
-    createLabel("+", Rct2D(55, 90, 20, 20), { ...options, disabled: model.mayNotIncrement }, () => model.increment())
+    CounterLabel(model.countString, rect2D(10, 10, 80, 80), { ...options, vOffset: -6 }),
+    CounterLabel("-", rect2D(25, 90, 20, 20), {
+      ...options,
+      disabled: model.mayNotDecrement,
+      events: { click: () => model.decrement() },
+    }),
+    CounterLabel("+", rect2D(55, 90, 20, 20), {
+      ...options,
+      disabled: model.mayNotIncrement,
+      events: { click: () => model.increment() },
+    })
   );
 }

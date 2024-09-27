@@ -1,11 +1,11 @@
-import { View, core, HStack, Link, Spacer, Button, createCarouselAtom } from "zaffre";
+import { View, core, HStack, Link, Spacer, Button, carouselAtom } from "zaffre";
 
 const site1 = "https://example.com";
 const site2 = "https://www.lipsum.com";
 
 export function LinkExample(): View {
   const gridURI = "link.gridexamples";
-  const url = createCarouselAtom([site1, site2], site1);
+  const url = carouselAtom([site1, site2], site1);
   return HStack().append(
     Link(gridURI, { text: "Grid Example"}),
     Spacer(core.space.s7),

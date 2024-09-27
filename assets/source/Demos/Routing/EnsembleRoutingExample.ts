@@ -1,11 +1,13 @@
-import { core, View, ch, createColorToken, CenteredTextLabel, SegmentedTextButton, VStack, pct, Ensemble, createRouteAtom } from "zaffre";
+import { core, View, ch, colorToken, CenteredTextLabel, SegmentedTextButton, VStack, pct, Ensemble, routeAtom } from "zaffre";
+
+// Add routing using an Ensemble view with a route atom. 
 
 export function EnsembleRoutingExample(): View {
   const colors = ["red", "green", "blue"];
-  const selectedColor = createRouteAtom("color", "red");
+  const selectedColor = routeAtom("color", "red");
 
-  function createColorBox(colorName: string): View {
-    const color = createColorToken({ cssName: colorName });
+  function ColorBox(colorName: string): View {
+    const color = colorToken({ cssName: colorName });
     return CenteredTextLabel(colorName, {
       width: pct(100),
       height: ch(12),
@@ -17,6 +19,6 @@ export function EnsembleRoutingExample(): View {
 
   return VStack().append(
     SegmentedTextButton(selectedColor, colors),
-    Ensemble(selectedColor, (colorName) => createColorBox(colorName))
+    Ensemble(selectedColor, (colorName) => ColorBox(colorName))
   );
 }
