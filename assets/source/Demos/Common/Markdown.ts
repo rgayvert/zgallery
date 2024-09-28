@@ -36,8 +36,8 @@ function fixDarkModeAndLinkBase(s: zstring, darkModeSuffix: string): Atom<string
   const linkBasePrefix = linkPathPrefix();
   return atom(() =>
     inDarkMode()
-      ? zget(s).replaceAll("<<DM>>", darkModeSuffix).replaceAll("<<AB>>", linkBasePrefix)
-      : zget(s).replaceAll("<<DM>>", "").replaceAll("<<AB>>", linkBasePrefix)
+      ? zget(s).replaceAll("<<DM>>", darkModeSuffix).replaceAll("{{AB}}", linkBasePrefix)
+      : zget(s).replaceAll("<<DM>>", "").replaceAll("{{AB}}", linkBasePrefix)
   );
 }
 
