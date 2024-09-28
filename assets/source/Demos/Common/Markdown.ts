@@ -45,7 +45,7 @@ export function Markdown(inOptions: MarkdownOptions = {}): View {
       const path = url.split("/").slice(0, -1).join("/");
       const f = <typeof markdownTransform>options.textTransformFn;
       options.textTransformFn = (text: string) =>
-        f(text).replaceAll("./assets/", `${path}/assets/`).replaceAll("{{AB}}", linkPathPrefix());
+        f(text).replaceAll("./assets/", `${path}/assets/`).replaceAll("<<AB>>", linkPathPrefix());
     }
     mdText = url ? fetchTextAtom(url) : "";
   } else {
