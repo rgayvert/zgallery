@@ -40,6 +40,7 @@ export function Markdown(inOptions: MarkdownOptions = {}): View {
   if (options.uri) {
     let url = resolveURI(options.uri);
     if (options.expandRelativeAssets) {
+      console.log("linkPathPrefix="+linkPathPrefix());
       // prepend ./assets/ with the path to this file
       const path = url.split("/").slice(0, -1).join("/");
       const f = <typeof markdownTransform>options.textTransformFn;
